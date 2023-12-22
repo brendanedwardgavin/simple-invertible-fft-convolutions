@@ -6,13 +6,14 @@ import torch.nn.functional as F
 def fft_conv1d(x, kernel):
     """
     Simple 1D convolution using FFT that returns same value as 
-    torch.functional.conv1d(x, kernel, padding="same") for circular padding.
+    torch.functional.conv1d(x, kernel, padding="same") for circular padding of x.
     Assumes 1 channel.
     """
     # channels = 1
     assert kernel.shape[1] == 1 and kernel.shape[0] == 1 
     
     k = kernel.shape[-1]
+    
     kernel_padded = F.pad(kernel.flip(2), (0, x.shape[-1]-k), mode="constant")
     kernel_padded = kernel_padded.roll(-floor(k/2), dims=2)
     kernel_fft = torch.fft.fft(kernel_padded)

@@ -20,7 +20,6 @@ def test_fft_conv1d(signal_dim, kernel_dim):
         F.pad(x, (K//2+1, K//2+1), mode="circular"), 
         kernel, padding="same")[:,:,K//2+1:-(K//2+1)]
     y_fft = fft_conv1d(x, kernel)
-    print(x.shape, y_torch.shape, y_fft.shape)
     
     assert torch.norm(y_torch-y_fft)/torch.norm(y_torch) < TEST_TOL
     
