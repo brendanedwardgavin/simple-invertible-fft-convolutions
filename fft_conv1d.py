@@ -5,7 +5,9 @@ import torch.nn.functional as F
 
 def fft_conv1d(x, kernel):
     """
-    Simple 1D convolution using FFT that returns same value as torch.functional.conv1d(x, kernel, padding="same"). Assumes 1 channel.
+    Simple 1D convolution using FFT that returns same value as 
+    torch.functional.conv1d(x, kernel, padding="same") for circular padding.
+    Assumes 1 channel.
     """
     # channels = 1
     assert kernel.shape[1] == 1 and kernel.shape[0] == 1 
