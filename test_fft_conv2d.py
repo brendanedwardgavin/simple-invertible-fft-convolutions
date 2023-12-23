@@ -16,21 +16,10 @@ def test_fft_conv2d(signal_dim, kernel_dim):
     kernel = torch.randn(C, 1, *K)
     x = torch.randn(B, C, *N)
     
-    x_torch_pad = F.pad(
-        x,
-        (
-            K[1]//2+1, K[1]//2+1,
-            K[0]//2+1, K[0]//2+1,
-        ),
-        mode="circular")
-    y_torch = F.conv2d(
-        x_torch_pad,
-        kernel, padding="same")
-    y_torch = y_torch[
-            :,:,
-            K[0]//2+1:-(K[0]//2+1),
-            K[1]//2+1:-(K[1]//2+1),
-        ]
+    torch_conv = torch.nn.Conv2d(1, 1, K, padding="same", bias=False, padding_mode='circular')
+    torch_conv.weight.data = kernel
+    y_torch = torch_conv(x)
+
     y_fft = fft_conv2d(x, kernel)
     
     relative_residual = torch.norm(y_torch-y_fft)/torch.norm(y_torch)
@@ -46,21 +35,10 @@ def test_fft_inv_conv2d(signal_dim, kernel_dim):
     kernel = torch.randn(C, 1, *K)
     x = torch.randn(B, C, *N)
     
-    x_torch_pad = F.pad(
-        x,
-        (
-            K[1]//2+1, K[1]//2+1,
-            K[0]//2+1, K[0]//2+1,
-        ),
-        mode="circular")
-    y_torch = F.conv2d(
-        x_torch_pad,
-        kernel, padding="same")
-    y_torch = y_torch[
-            :,:,
-            K[0]//2+1:-(K[0]//2+1),
-            K[1]//2+1:-(K[1]//2+1),
-        ]
+    torch_conv = torch.nn.Conv2d(1, 1, K, padding="same", bias=False, padding_mode='circular')
+    torch_conv.weight.data = kernel
+    y_torch = torch_conv(x)
+    
     y_fft = fft_conv2d(x, kernel)
     
     x_torch_inv = fft_inv_conv2d(y_torch, kernel)

@@ -5,9 +5,8 @@ import torch.nn.functional as F
 
 def fft_conv2d(x, kernel):
     """
-    Simple 1D convolution using FFT that returns same value as 
-    torch.functional.conv2d(x, kernel, padding="same") for circular padding of x.
-    Assumes 1 channel.
+    Simple 2D convolution using FFT that returns same value as 
+    torch.nn.Conv2d(1, 1, kernel_size, padding="same", bias=False, padding_mode='circular')
     """
     # channels = 1
     assert kernel.shape[1] == 1 and kernel.shape[0] == 1 
@@ -35,7 +34,7 @@ def fft_conv2d(x, kernel):
 
 def fft_inv_conv2d(x, kernel):
     """
-    Simple inverse of 1D convolution using FFT. Assumes 1 channel.
+    Simple inverse of 2D convolution using FFT. Assumes 1 channel.
     """
     # channels = 1
     assert kernel.shape[1] == 1 and kernel.shape[0] == 1 

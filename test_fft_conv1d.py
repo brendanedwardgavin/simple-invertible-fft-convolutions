@@ -16,9 +16,10 @@ def test_fft_conv1d(signal_dim, kernel_dim):
     kernel = torch.randn(C, 1, K)
     x = torch.randn(B, C, N)
     
-    y_torch = F.conv1d(
-        F.pad(x, (K//2+1, K//2+1), mode="circular"), 
-        kernel, padding="same")[:,:,K//2+1:-(K//2+1)]
+    torch_conv = torch.nn.Conv1d(1, 1, K, padding="same", bias=False, padding_mode='circular')
+    torch_conv.weight.data = kernel
+    y_torch = torch_conv(x)
+    
     y_fft = fft_conv1d(x, kernel)
     
     assert torch.norm(y_torch-y_fft)/torch.norm(y_torch) < TEST_TOL
@@ -30,13 +31,13 @@ def test_fft_inv_conv1d(signal_dim, kernel_dim):
     N = signal_dim
     K = kernel_dim
 
-    device = torch.device("cuda:0")
-    kernel = torch.randn(C, 1, K).to(device)
-    x = torch.randn(B, C, N).to(device)
+    kernel = torch.randn(C, 1, K)
+    x = torch.randn(B, C, N)
     
-    y_torch = F.conv1d(
-        F.pad(x, (K//2+1, K//2+1), mode="circular"),
-        kernel, padding="same")[:,:,K//2+1:-(K//2+1)]
+    torch_conv = torch.nn.Conv1d(1, 1, K, padding="same", bias=False, padding_mode='circular')
+    torch_conv.weight.data = kernel
+    y_torch = torch_conv(x)
+    
     y_fft = fft_conv1d(x, kernel)
     
     x_torch_inv = fft_inv_conv1d(y_torch, kernel)
