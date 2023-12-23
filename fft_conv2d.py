@@ -34,7 +34,8 @@ def fft_conv2d(x, kernel):
 
 def fft_inv_conv2d(x, kernel):
     """
-    Simple inverse of 2D convolution using FFT. Assumes 1 channel.
+    Simple inverse of 2D convolution using FFT. Inverts convolution performed by 
+    torch.nn.Conv2d(1, 1, kernel_size, padding="same", bias=False, padding_mode='circular')
     """
     # channels = 1
     assert kernel.shape[1] == 1 and kernel.shape[0] == 1 
