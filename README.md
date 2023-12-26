@@ -11,12 +11,12 @@ This repo provides minimalist implementations of 1D and 2D invertible FFT convol
 <img align="center" width="400" src="fftconvill.png">
 <img align="center" width="400" src="invkernill.png">
 
-**Implementations: **
+**Implementations:**
 
  - 1D convolutions and inverses: fft_conv1d.py
  - 2D convolutions and inverses: fft_conv2d.py
 
-**Example usage: **
+**Example usage:**
 
  - 1D convolutions and inverses: test_fft_conv1d.py
  - 2D convolutions and inverses: test_fft_conv2d.py
