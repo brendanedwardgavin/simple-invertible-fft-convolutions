@@ -1,5 +1,4 @@
 import torch
-import torch.nn.functional as F
 import pytest
 
 from fft_conv2d import fft_conv2d, fft_inv_conv2d

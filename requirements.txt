@@ -1,2 +1,8 @@
 torch
+torchvision
 pytest
+matplotlib
+pexpect
+psutil
+pycocotools
+scipy

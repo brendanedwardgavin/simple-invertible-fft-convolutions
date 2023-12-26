@@ -22,24 +22,6 @@ def adjust_kernel_to_torch(kernel, x_shape):
     
     return kernel_padded
 
-def undo_adjust_kernel_to_torch(kernel, x_shape):
-    k_shape = kernel.shape[2:]
-    x_shape = x_shape[2:]
-    
-    k_padding = (
-        0, x_shape[-1]-k_shape[-1],
-        0, x_shape[-2]-k_shape[-2],
-    )
-    k_rolling = (
-        -floor(k_shape[0]/2),
-        -floor(k_shape[1]/2),
-    )
-    dims = (2, 3)
-    kernel_padded = kernel.flip(dims)
-    kernel_padded = F.pad(kernel_padded, k_padding, mode="constant")
-    kernel_padded = kernel_padded.roll(k_rolling, dims=dims)
-    
-    return kernel_padded
 
 def fft_conv2d(x, kernel):
     """
