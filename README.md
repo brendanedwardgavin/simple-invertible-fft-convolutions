@@ -4,7 +4,7 @@ Convolution operations are equivalent to multiplication by Toeplitz matrices, an
 
 Using this strategy to invert the native PyTorch convolution implementations is a bit tricky, though, because the PyTorch definition of a convolution is different from the definition of a convolution in the Convolution Theorem. Specifically, the Convolution Theorem version is shifted and inverted (in all dimensions):
 
-<img align="center" width="400" src="karnadjill.png">
+<img align="center" width="400" src="kernadjill.png">
 
 This repo provides minimalist implementations of 1D and 2D invertible FFT convolutions that are compatible with torch.nn.Conv1D and torch.nn.Conv2D. The goal here is simplicity, so no attempt is made to replicate strides and the number of channels is fixed at 1. 
 
